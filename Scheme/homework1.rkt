@@ -1,5 +1,7 @@
 #lang racket
 
+; https://github.com/gioenn/pl/blob/master/homework1.txt
+
 ; exercise 1
 
 ; define the "gcd" function.
@@ -198,3 +200,38 @@
     (map f fl)
   )
 )
+
+
+; exercise 9
+
+; define the "on-sign" macro.
+
+; on-sign choose between three branches depending if the value considered is greater than zero, equals to zero, or less than zero.
+; this macro has the following syntax:
+; (on-sign <my expr> pos: <block of code> zero: <block of code> neg: <block of code>) 
+
+; examples:
+
+; (on-sign 2
+;         pos: 'a
+;         zero: 'b
+;         neg: 'c) -> 'a
+
+; > (on-sign (- 5 6)
+;          pos: (begin (display "positive") (newline))
+;          zero: (begin (display "zero") (newline))
+;          neg: (begin (display "negative") (newline)))
+; negative
+
+(define-syntax on-sign
+  (syntax-rules (zero: neg: pos:)
+    ((_ num
+        pos: body1
+        zero: body2
+        neg: body3)
+     (case num
+           ((positive?) body1)
+           ((negative?) body2)
+           (else body3)
+         )
+     )))
